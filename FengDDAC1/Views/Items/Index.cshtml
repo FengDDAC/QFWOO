@@ -1,0 +1,52 @@
+﻿@model IEnumerable<FengDDAC1.Models.Item>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Home/", "Index", "Home")
+    @Html.ActionLink("Create New", "Create", "Items")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.itemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.customerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vessel.vesselType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.customerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vessel.vesselType)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.itemID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.itemID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.itemID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,75 @@
+﻿@model FengDDAC1.Models.Vessel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vessel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.vesselType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vesselType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vesselSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vesselSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vesselName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vesselName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vesselApproval)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vesselApproval)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.vesselAgent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.vesselAgent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.customerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.customerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Schedule.sailingRoute)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Schedule.sailingRoute)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.vesselID }) |
+    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Home", "Index", "Home")
+</p>

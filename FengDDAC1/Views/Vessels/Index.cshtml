@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FengDDAC1.Models.Vessel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Home/", "Index", "Home")
+    @Html.ActionLink("Create New", "Create", "Vessels")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.vesselType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.vesselSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.vesselName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.vesselApproval)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.vesselAgent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.customerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Schedule.sailingRoute)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.vesselType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vesselSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vesselName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vesselApproval)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vesselAgent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.customerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Schedule.sailingRoute)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.vesselID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.vesselID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.vesselID })
+        </td>
+    </tr>
+}
+
+</table>

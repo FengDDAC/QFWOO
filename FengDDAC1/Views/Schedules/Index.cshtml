@@ -1,0 +1,70 @@
+﻿@model IEnumerable<FengDDAC1.Models.Schedule>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Home/", "Index", "Home")
+    @Html.ActionLink("Create New", "Create", "Schedules")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.sailingRoute)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sailingDestination)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sailingDepartureDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sailingArrivalDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.spaceAvailable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.spaceSize)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sailingCaptain)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.sailingRoute)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sailingDestination)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sailingDepartureDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sailingArrivalDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.spaceAvailable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.spaceSize)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sailingCaptain)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.scheduleID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.scheduleID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.scheduleID })
+        </td>
+    </tr>
+}
+
+</table>

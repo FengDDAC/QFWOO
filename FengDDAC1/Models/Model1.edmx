@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FengDDACModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerName" Type="varchar" MaxLength="50" />
+          <Property Name="customerIC" Type="varchar" MaxLength="50" />
+          <Property Name="customerDateOfBirth" Type="date" />
+          <Property Name="customerAddress" Type="varchar" MaxLength="50" />
+          <Property Name="customerPhoneNo" Type="varchar" MaxLength="50" />
+          <Property Name="customerVessel" Type="int" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="itemName" Type="varchar" MaxLength="50" />
+          <Property Name="itemQuantity" Type="int" />
+          <Property Name="itemCustomer" Type="int" Nullable="false" />
+          <Property Name="itemVessel" Type="int" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="scheduleID" />
+          </Key>
+          <Property Name="scheduleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sailingRoute" Type="varchar" MaxLength="50" />
+          <Property Name="sailingDestination" Type="varchar" MaxLength="50" />
+          <Property Name="sailingDepartureDate" Type="datetime" />
+          <Property Name="sailingArrivalDate" Type="datetime" />
+          <Property Name="spaceAvailable" Type="int" />
+          <Property Name="spaceSize" Type="float" />
+          <Property Name="sailingCaptain" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Vessel">
+          <Key>
+            <PropertyRef Name="vesselID" />
+          </Key>
+          <Property Name="vesselID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="vesselScheduleID" Type="int" Nullable="false" />
+          <Property Name="vesselType" Type="varchar" MaxLength="50" />
+          <Property Name="vesselSize" Type="int" />
+          <Property Name="vesselName" Type="varchar" MaxLength="50" />
+          <Property Name="vesselApproval" Type="nchar" MaxLength="10" />
+          <Property Name="vesselCustomer" Type="int" />
+          <Property Name="vesselAgent" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_CustomerTbl_VesselTbl">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="vesselID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="customerVessel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemTbl_CustomerTbl">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="itemCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemTbl_VesselTbl">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="vesselID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="itemVessel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VesselTbl_CustomerTbl">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="vesselCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VesselTbl_ScheduleTbl">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="scheduleID" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="vesselScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FengDDACModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vessel" EntityType="Self.Vessel" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CustomerTbl_VesselTbl" Association="Self.FK_CustomerTbl_VesselTbl">
+            <End Role="Vessel" EntitySet="Vessel" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemTbl_CustomerTbl" Association="Self.FK_ItemTbl_CustomerTbl">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemTbl_VesselTbl" Association="Self.FK_ItemTbl_VesselTbl">
+            <End Role="Vessel" EntitySet="Vessel" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VesselTbl_CustomerTbl" Association="Self.FK_VesselTbl_CustomerTbl">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Vessel" EntitySet="Vessel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VesselTbl_ScheduleTbl" Association="Self.FK_VesselTbl_ScheduleTbl">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="Vessel" EntitySet="Vessel" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FengDDACModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="customerIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="customerDateOfBirth" Type="DateTime" Precision="0" />
+          <Property Name="customerAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="customerPhoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="customerVessel" Type="Int32" />
+          <NavigationProperty Name="Vessel" Relationship="Self.FK_CustomerTbl_VesselTbl" FromRole="Customer" ToRole="Vessel" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_ItemTbl_CustomerTbl" FromRole="Customer" ToRole="Item" />
+          <NavigationProperty Name="Vessels" Relationship="Self.FK_VesselTbl_CustomerTbl" FromRole="Customer" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="itemID" />
+          </Key>
+          <Property Name="itemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="itemQuantity" Type="Int32" />
+          <Property Name="itemCustomer" Type="Int32" Nullable="false" />
+          <Property Name="itemVessel" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_ItemTbl_CustomerTbl" FromRole="Item" ToRole="Customer" />
+          <NavigationProperty Name="Vessel" Relationship="Self.FK_ItemTbl_VesselTbl" FromRole="Item" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="scheduleID" />
+          </Key>
+          <Property Name="scheduleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sailingRoute" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sailingDestination" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sailingDepartureDate" Type="DateTime" Precision="3" />
+          <Property Name="sailingArrivalDate" Type="DateTime" Precision="3" />
+          <Property Name="spaceAvailable" Type="Int32" />
+          <Property Name="spaceSize" Type="Double" />
+          <Property Name="sailingCaptain" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Vessels" Relationship="Self.FK_VesselTbl_ScheduleTbl" FromRole="Schedule" ToRole="Vessel" />
+        </EntityType>
+        <EntityType Name="Vessel">
+          <Key>
+            <PropertyRef Name="vesselID" />
+          </Key>
+          <Property Name="vesselID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="vesselScheduleID" Type="Int32" Nullable="false" />
+          <Property Name="vesselType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vesselSize" Type="Int32" />
+          <Property Name="vesselName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="vesselApproval" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="vesselCustomer" Type="Int32" />
+          <Property Name="vesselAgent" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_CustomerTbl_VesselTbl" FromRole="Vessel" ToRole="Customer" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_VesselTbl_CustomerTbl" FromRole="Vessel" ToRole="Customer" />
+          <NavigationProperty Name="Items" Relationship="Self.FK_ItemTbl_VesselTbl" FromRole="Vessel" ToRole="Item" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK_VesselTbl_ScheduleTbl" FromRole="Vessel" ToRole="Schedule" />
+        </EntityType>
+        <Association Name="FK_CustomerTbl_VesselTbl">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="vesselID" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="customerVessel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemTbl_CustomerTbl">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="itemCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VesselTbl_CustomerTbl">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="vesselCustomer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemTbl_VesselTbl">
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vessel">
+              <PropertyRef Name="vesselID" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="itemVessel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VesselTbl_ScheduleTbl">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="Vessel" Type="Self.Vessel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="scheduleID" />
+            </Principal>
+            <Dependent Role="Vessel">
+              <PropertyRef Name="vesselScheduleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FengDDACEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Items" EntityType="Self.Item" />
+          <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+          <EntitySet Name="Vessels" EntityType="Self.Vessel" />
+          <AssociationSet Name="FK_CustomerTbl_VesselTbl" Association="Self.FK_CustomerTbl_VesselTbl">
+            <End Role="Vessel" EntitySet="Vessels" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemTbl_CustomerTbl" Association="Self.FK_ItemTbl_CustomerTbl">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VesselTbl_CustomerTbl" Association="Self.FK_VesselTbl_CustomerTbl">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Vessel" EntitySet="Vessels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemTbl_VesselTbl" Association="Self.FK_ItemTbl_VesselTbl">
+            <End Role="Vessel" EntitySet="Vessels" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VesselTbl_ScheduleTbl" Association="Self.FK_VesselTbl_ScheduleTbl">
+            <End Role="Schedule" EntitySet="Schedules" />
+            <End Role="Vessel" EntitySet="Vessels" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FengDDACModelStoreContainer" CdmEntityContainer="FengDDACEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="FengDDACModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="customerIC" ColumnName="customerIC" />
+                <ScalarProperty Name="customerDateOfBirth" ColumnName="customerDateOfBirth" />
+                <ScalarProperty Name="customerAddress" ColumnName="customerAddress" />
+                <ScalarProperty Name="customerPhoneNo" ColumnName="customerPhoneNo" />
+                <ScalarProperty Name="customerVessel" ColumnName="customerVessel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="FengDDACModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="itemID" ColumnName="itemID" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="itemQuantity" ColumnName="itemQuantity" />
+                <ScalarProperty Name="itemCustomer" ColumnName="itemCustomer" />
+                <ScalarProperty Name="itemVessel" ColumnName="itemVessel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="FengDDACModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="scheduleID" ColumnName="scheduleID" />
+                <ScalarProperty Name="sailingRoute" ColumnName="sailingRoute" />
+                <ScalarProperty Name="sailingDestination" ColumnName="sailingDestination" />
+                <ScalarProperty Name="sailingDepartureDate" ColumnName="sailingDepartureDate" />
+                <ScalarProperty Name="sailingArrivalDate" ColumnName="sailingArrivalDate" />
+                <ScalarProperty Name="spaceAvailable" ColumnName="spaceAvailable" />
+                <ScalarProperty Name="spaceSize" ColumnName="spaceSize" />
+                <ScalarProperty Name="sailingCaptain" ColumnName="sailingCaptain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vessels">
+            <EntityTypeMapping TypeName="FengDDACModel.Vessel">
+              <MappingFragment StoreEntitySet="Vessel">
+                <ScalarProperty Name="vesselID" ColumnName="vesselID" />
+                <ScalarProperty Name="vesselScheduleID" ColumnName="vesselScheduleID" />
+                <ScalarProperty Name="vesselType" ColumnName="vesselType" />
+                <ScalarProperty Name="vesselSize" ColumnName="vesselSize" />
+                <ScalarProperty Name="vesselName" ColumnName="vesselName" />
+                <ScalarProperty Name="vesselApproval" ColumnName="vesselApproval" />
+                <ScalarProperty Name="vesselCustomer" ColumnName="vesselCustomer" />
+                <ScalarProperty Name="vesselAgent" ColumnName="vesselAgent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

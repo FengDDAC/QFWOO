@@ -1,0 +1,75 @@
+﻿@model FengDDAC1.Models.Schedule
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Schedule Details</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.sailingRoute)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sailingRoute)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sailingDestination)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sailingDestination)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sailingDepartureDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sailingDepartureDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sailingArrivalDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sailingArrivalDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.spaceAvailable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.spaceAvailable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.spaceSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.spaceSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sailingCaptain)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sailingCaptain)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.scheduleID }) |
+    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Home", "Index","Home")
+</p>

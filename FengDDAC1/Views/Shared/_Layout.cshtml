@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>@ViewBag.Title -Feng</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="@Url.Action("Index", "Home")">
+                    <i class="fa fa-ship" style="font-size:48px;color:red"></i>
+                </a>
+            
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
+
+                    @if (ViewBag.RoleType == "Admin")
+    {
+                <li>@Html.ActionLink("Create Schedule", "Create", "Schedules")</li>
+                <li>@Html.ActionLink("Manage Schedule", "Index", "Schedules")</li>
+
+}
+else if (ViewBag.RoleType == "Agent")
+{
+
+                <li>@Html.ActionLink("Create Customer", "Create", "Customers")</li>
+                <li>@Html.ActionLink("Manage Customer", "Index", "Customers")</li>
+                <li>@Html.ActionLink("Create Item", "Create", "Items")</li>
+                <li>@Html.ActionLink("Manage Item", "Index", "Items")</li>
+                <li>@Html.ActionLink("Book Vessels", "Create", "Vessels")</li>
+                <li>@Html.ActionLink("Manage Vessels", "Index", "Vessels")</li>
+}
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - By Woo Quan Feng</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿@model FengDDAC1.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.customerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customerIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customerDateOfBirth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerDateOfBirth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customerAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customerPhoneNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerPhoneNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vessel.vesselType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vessel.vesselType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit/", "Edit", new { id = Model.customerID }) |
+    @Html.ActionLink("Back to List/", "Index")
+    @Html.ActionLink("Home", "Index","Home")
+</p>
